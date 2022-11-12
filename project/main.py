@@ -97,13 +97,14 @@ def identify(encoded_data):
         # add rectangle and text
         img = cv2.rectangle(img, (round(mintuple[0]*width), round(mintuple[1]*height)), (round(maxtuple[0]*width), round(maxtuple[1]*height)), (36, 255, 12), 1)
         cv2.putText(img, object_.name, (round(mintuple[0]*width)+1, round(mintuple[1]*height)+16), cv2.FONT_HERSHEY_SIMPLEX, .7, (36,255,12), 2)
+        crop(round(mintuple[0]*width), round(mintuple[1]*height), (round(maxtuple[0]*width), round(maxtuple[1]*height), object_.name))
     cv2.imwrite("identified.jpg", img)
 
 def killfiles():
-    removingjpg= glob.glob('file path/*.jpg')
+    removingjpg= glob.glob('project/*.jpg')
     for i in removingjpg:
         os.remove(i)
-    removingtxt = glob.glob('file path/*.txt')
+    removingtxt = glob.glob('project/*.txt')
     for i in removingtxt:
         os.remove(i)
 
