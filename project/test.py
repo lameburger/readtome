@@ -27,3 +27,5 @@ cv2.imshow("image", img)
 cv2.imshow("cutimage", cut_img)
 
 cv2.waitKey(0)
+
+#
