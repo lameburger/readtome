@@ -70,4 +70,3 @@ def killfiles():
     os.remove("page.txt")
     os.remove("snapshot.jpg")
     os.remove("page.jpg")
-
