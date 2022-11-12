@@ -1,5 +1,6 @@
 # tts library
 import pyttsx3
+import tkinter 
 # declare speaker object
 speaker = pyttsx3.init()
 #Set speed 
