@@ -9,6 +9,7 @@ import cv2
 from google.cloud import vision
 from google.cloud.vision_v1 import types
 import sys
+import glob
 
 
 #Define path to tessaract.exe
@@ -96,9 +97,17 @@ def identify(encoded_data):
         # add rectangle and text
         img = cv2.rectangle(img, (round(mintuple[0]*width), round(mintuple[1]*height)), (round(maxtuple[0]*width), round(maxtuple[1]*height)), (36, 255, 12), 1)
         cv2.putText(img, object_.name, (round(mintuple[0]*width)+1, round(mintuple[1]*height)+16), cv2.FONT_HERSHEY_SIMPLEX, .7, (36,255,12), 2)
-
+    cv2.imwrite("identified.jpg", img)
 
 def killfiles():
-    os.remove("page.txt")
-    os.remove("snapshot.jpg")
-    os.remove("page.jpg")
+    removingjpg= glob.glob('file path/*.jpg')
+    for i in removingjpg:
+        os.remove(i)
+    removingtxt = glob.glob('file path/*.txt')
+    for i in removingtxt:
+        os.remove(i)
+
+def crop(x1, y1, x2, y2, name):
+    img = cv2.imread(f"cropped{name}{x1}{y1}{x2}{y2}.png")
+    rows, cols, _ = img.shape
+    cropped_image = img[x1: x2, y1: y2]
