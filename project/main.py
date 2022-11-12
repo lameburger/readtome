@@ -6,6 +6,10 @@ import requests
 from io import BytesIO
 import base64
 import cv2
+from google.cloud import vision
+from google.cloud.vision_v1 import types
+import sys
+
 
 #Define path to tessaract.exe
 path_to_tesseract = r'C:\Program Files\Tesseract-OCR\tesseract.exe'
@@ -56,14 +60,42 @@ def b64_to_image(encoded_data):
     snapshot.write(decoded_data)
     snapshot.close()
 
-def crop(x1, y1, x2, y2):
+def identify(encoded_data):
     b64_to_image(encoded_data)
+    os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = r'fresh-capsule-368416-338e08784eb3.json'
+
+    client = vision.ImageAnnotatorClient()
+
+    path = r'snapshot.jpg'
+
+    with open(path, 'rb') as image_file:
+        content = image_file.read()
+    image = vision.Image(content=content)
+
+    objects = client.object_localization(
+        image=image).localized_object_annotations
+
     img = cv2.imread("snapshot.jpg")
-    # Cut image
-    cut_img = img[y1: y2, x1: x2]
-    cv2.imshow("image", img)
-    cv2.imshow("cutimage", cut_img)
-    cv2.waitKey(0)
+    height, width, _ = img.shape
+    
+    for object_ in objects:
+        vertices = []
+        for vertex in object_.bounding_poly.normalized_vertices:
+            # Puts vertices into list
+            vertices.append((vertex.x, vertex.y))
+        # Find bottom left and top left vertices
+        min = sys.maxsize 
+        max = 0 
+        for tuple in vertices:
+            if tuple[0] + tuple[1] < min:
+                mintuple = (tuple[0], tuple[1]) 
+                min = tuple[0] + tuple[1]
+            if tuple[0] + tuple[1] >= max:
+                maxtuple = (tuple[0], tuple[1]) 
+                max = tuple[0] + tuple[1]
+        # add rectangle and text
+        img = cv2.rectangle(img, (round(mintuple[0]*width), round(mintuple[1]*height)), (round(maxtuple[0]*width), round(maxtuple[1]*height)), (36, 255, 12), 1)
+        cv2.putText(img, object_.name, (round(mintuple[0]*width)+1, round(mintuple[1]*height)+16), cv2.FONT_HERSHEY_SIMPLEX, .7, (36,255,12), 2)
 
 
 def killfiles():
