@@ -14,3 +14,4 @@ speaker.setProperty('voice', input("path: ")
 #Speak
 speaker.say(text)
 speaker.runAndWait()
+# 
