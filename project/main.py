@@ -6,9 +6,6 @@ from pytesseract import pytesseract
 #Define path to tessaract.exe
 path_to_tesseract = r'C:\Program Files\Tesseract-OCR\tesseract.exe'
 
-#Define path to image
-path_to_image = 'page.png'
-
 #Point tessaract_cmd to tessaract.exe
 pytesseract.tesseract_cmd = path_to_tesseract
 
@@ -41,14 +38,10 @@ def text_to_speech(text, language, rate=150, volume=.8):
     speaker.say(text)
     speaker.runAndWait()
 
-def main():
-    #scan page and get path
-    image_to_text(path_to_image)
+def image_to_speech(language):
+    image_to_text('page.png')
     with open('page.txt') as f:
         text = f.read().replace('\n', '')
-    text_to_speech(text, input("Language: "))
+    text_to_speech(text, language)
     #os.remove("page.jpg")
     os.remove("page.txt")
-    
-if __name__ == "__main__":
-    main()
