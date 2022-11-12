@@ -53,7 +53,7 @@ def image_to_speech(language):
     text_to_speech(text, language)
 
 def b64_to_image(encoded_data):
-    reduced_encoded_data = encoded_data#[21:]
+    reduced_encoded_data = encoded_data[21:]
     decoded_data=base64.b64decode((reduced_encoded_data))
 
     snapshot = open('snapshot.jpg', 'wb')
