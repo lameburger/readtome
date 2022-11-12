@@ -109,6 +109,7 @@ def killfiles():
         os.remove(i)
 
 def crop(x1, y1, x2, y2, name):
-    img = cv2.imread(f"cropped{name}{x1}{y1}{x2}{y2}.png")
+    img = cv2.imread("snapshot.jpg")
     rows, cols, _ = img.shape
     cropped_image = img[x1: x2, y1: y2]
+    cv2.imwrite(f"cropped{name}{x1}{y1}{x2}{y2}.jpg", img)
