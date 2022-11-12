@@ -1,4 +1,5 @@
 import pyttsx3
+import os 
 from PIL import Image
 from pytesseract import pytesseract
 
@@ -21,9 +22,9 @@ def image_to_text(path_to_image):
     book.write(text)
     book.close()
 
-def text_to_speech(text, gender, rate, volume):
-    voice_dict = {'Male': 0, 'Female': 1}
-    code = voice_dict[gender] 
+def text_to_speech(text, language, rate=150, volume=.8):
+    lang_dict = {'German': 1, 'English': 2, 'French': 4, 'Spanish': 3}
+    index = lang_dict[language]
 
     speaker = pyttsx3.init()
 
@@ -35,7 +36,7 @@ def text_to_speech(text, gender, rate, volume):
 
     # Change voices: 0 for male and 1 for female
     voices = speaker.getProperty('voices')
-    speaker.setProperty('voice', voices[code].id)
+    speaker.setProperty('voice', voices[index].id)
 
     speaker.say(text)
     speaker.runAndWait()
@@ -45,7 +46,7 @@ def main():
     image_to_text(path_to_image)
     with open('page.txt') as f:
         text = f.read().replace('\n', '')
-    text_to_speech(text, input("Gender: "), 150, .8)
+    text_to_speech(text, input("Language: "))
     #os.remove("page.jpg")
     os.remove("page.txt")
     
