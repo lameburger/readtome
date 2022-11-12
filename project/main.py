@@ -2,7 +2,9 @@ import pyttsx3
 import os 
 from PIL import Image
 from pytesseract import pytesseract
-
+import requests
+from io import BytesIO
+import base64
 #Define path to tessaract.exe
 path_to_tesseract = r'C:\Program Files\Tesseract-OCR\tesseract.exe'
 
@@ -43,5 +45,18 @@ def image_to_speech(language):
     with open('page.txt') as f:
         text = f.read().replace('\n', '')
     text_to_speech(text, language)
-    #os.remove("page.jpg")
+    os.remove("page.jpg")
     os.remove("page.txt")
+
+def b64_to_image():
+    f = open('url.txt', 'rb')
+    encoded_data = f.read()
+    f.close()
+
+    decoded_data=base64.b64decode((encoded_data))
+
+    snapshot = open('snapshot.jpg', 'wb')
+    snapshot.write(decoded_data)
+    snapshot.close()
+
+
