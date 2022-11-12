@@ -75,3 +75,24 @@ def killfiles():
     os.remove("snapshot.jpg")
     os.remove("page.jpg")
     os.remove("url.txt")
+
+def identify(encoded_data):
+    b64_to_image(encoded_data)
+    os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = r'fresh-capsule-368416-338e08784eb3.json'
+
+    client = vision.ImageAnnotatorClient()
+
+    path = r'snapshot.jpg'
+
+    with open(path, 'rb') as image_file:
+        content = image_file.read()
+    image = vision.Image(content=content)
+
+    objects = client.object_localization(
+        image=image).localized_object_annotations
+    
+    
+    for object_ in objects:
+        print("\n Name - {}".format(object_.name))
+        for vertex in object_.bounding_poly.normalized_vertices:
+            print("({}, {})".format(vertex.x, vertex.y))
