@@ -13,4 +13,4 @@ with open('page.txt') as f:
 #Speak
 speaker.say(text)
 speaker.runAndWait()
-#
+
