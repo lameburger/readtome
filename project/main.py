@@ -3,7 +3,7 @@ import os
 from PIL import Image
 from pytesseract import pytesseract
 import requests
-from io import BytesIO
+import io 
 import base64
 import cv2
 from google.cloud import vision
@@ -113,3 +113,44 @@ def crop(x1, y1, x2, y2, name):
     rows, cols, _ = img.shape
     cropped_image = img[x1: x2, y1: y2]
     cv2.imwrite(f"cropped{name}{x1}{y1}{x2}{y2}.jpg", img)
+
+#takes in picture and splits into two halves split by a vertical line
+def booksplit(book):
+    img = cv2.imread(book)
+    h, w, _ = img.shape
+    crop(0, 0, int(w/2), h, "left page")
+    crop(int(w/2), 0, w, h, "right page")
+
+def detect_bill(path):
+    currency = "no bank note identified"
+    client = vision.ImageAnnotatorClient()
+
+    with io.open(path, 'rb') as image_file:
+        content = image_file.read()
+
+    image = vision.Image(content=content)
+
+    response = client.web_detection(image=image)
+    annotations = response.web_detection
+
+    if annotations.web_entities:
+        for entity in annotations.web_entities:
+            if entity.description == "United States five-dollar bill":
+                currency = "5 dollar bill"
+                break
+            elif entity.description == "United States two-dollar bill":
+                currency = "2 dollar bill"
+                break
+            elif entity.description == "United States one-dollar bill":
+                currency = "1 dollar bill"
+                break
+            elif entity.description == "United States hundred-dollar bill":
+                currency = "100 dollar bill"
+                break
+            elif entity.description == "United States fifty-dollar bill":
+                currency = "50 dollar bill"
+                break
+            elif entity.description == "United States ten-dollar bill":
+                currency = "10 dollar bill"
+                break
+        print(currency)
