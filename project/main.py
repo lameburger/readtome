@@ -6,7 +6,6 @@ import requests
 from io import BytesIO
 import base64
 import cv2
-import numpy as np
 
 #Define path to tessaract.exe
 path_to_tesseract = r'C:\Program Files\Tesseract-OCR\tesseract.exe'
@@ -49,19 +48,16 @@ def image_to_speech(language):
         text = f.read().replace('\n', '')
     text_to_speech(text, language)
 
-def b64_to_image():
-    f = open('url.txt', 'rb')
-    encoded_data = f.read()
-    f.close()
-
-    decoded_data=base64.b64decode((encoded_data))
+def b64_to_image(encoded_data):
+    reduced_encoded_data = encoded_data[21:]
+    decoded_data=base64.b64decode((reduced_encoded_data))
 
     snapshot = open('snapshot.jpg', 'wb')
     snapshot.write(decoded_data)
     snapshot.close()
 
 def crop(x1, y1, x2, y2):
-    b64_to_image("url.txt")
+    b64_to_image(encoded_data)
     img = cv2.imread("snapshot.jpg")
     # Cut image
     cut_img = img[y1: y2, x1: x2]
@@ -74,4 +70,4 @@ def killfiles():
     os.remove("page.txt")
     os.remove("snapshot.jpg")
     os.remove("page.jpg")
-    os.remove("url.txt")
+
