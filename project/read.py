@@ -16,4 +16,6 @@ img = Image.open(path_to_image)
 #Extract text from image
 text = pytesseract.image_to_string(img)
 
-print(text)
+book = open("page.txt", "x")
+book.write(text)
+book.close()
