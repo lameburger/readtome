@@ -55,6 +55,7 @@ def image_to_speech(language, rate, volume, path):
     text_to_speech(text, language, rate, volume)
 
 def b64_to_image(encoded_data):
+
     reduced_encoded_data = encoded_data[22:]
     decoded_data=base64.b64decode((reduced_encoded_data))
 
