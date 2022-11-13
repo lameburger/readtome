@@ -104,7 +104,7 @@ def scan(encoded_data):
         img = cv2.rectangle(img, (x1, y1), (x2, y2), (36, 255, 12), 1)
         crop(x1, y1, x2, y2, object_.name, image)
         cv2.putText(img, object_.name, (round(mintuple[0]*width)+1, round(mintuple[1]*height)+16), cv2.FONT_HERSHEY_SIMPLEX, .7, (36,255,12), 2)
-    cv2.imwrite("identified.jpg", img)
+    cv2.imwrite("scanned.jpg", img)
 
 def killfiles():
     removingjpg= glob.glob("*.jpg")

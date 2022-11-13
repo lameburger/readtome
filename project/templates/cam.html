@@ -9,18 +9,54 @@
 	<script src="static/scripts/capture.js"></script>
 </head>
 <body>
+    <!-- <div class="camera">
+        <video id="video">Video stream not available.</video>
+    </div>
 
-    <div class="contentarea">
-    <div class="camera">
+    <div class="output" style>
+        <img id="photo" alt="The screen capture will appear in this box."> 
+    </div>
+
+    <button id="startbutton">Take photo</button>  -->
+
+    <div class="split left">
+        <div class="centered">
+            <img src="" id="image">
+        </div>
+    </div>
+    <a 
+    <div class="split right"> 
+        <div class="centered">
+            <img src="">
+        </div>
+    </div>
+
+    <!-- <video id="video">Video stream not available.</video>
+    <button type="button" class="btn">Submit</button> -->
+
+
+    <!-- <div class="div1">
         <video id="video">Video stream not available.</video>
         <button id="startbutton">Take photo</button> 
     </div>
-    <canvas id="canvas">
-    </canvas>
-    <div class="output">
-        <img id="photo" alt="The screen capture will appear in this box."> 
-    </div>
-    </div>
+    <div class="div2">
+        <img id="photo" alt="The screen capture will appear in this box.">
+    </div> -->
+    <script>
+    function balls (id) {
+        var img = document.createElement("img");
+        img.src = "/project/scanned.jpg";
+        var block = document.getElementById(id);
+        block.appendChild(img);
+    }
+    var img = new File("/project/scanned.jpg");
+    while (True) {
+        if (img.exists()) {
+            function balls (image)
+            break
+        }
 
+    }
+    </script>
 </body>
 </html>
