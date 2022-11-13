@@ -29,7 +29,7 @@ def image_to_text(path_to_image):
     book.write(text)
     book.close()
 
-def text_to_speech(text, language, rate=150, volume=.8):
+def text_to_speech(text, language, rate, volume):
     lang_dict = {'German': 1, 'English': 2, 'French': 4, 'Spanish': 3}
     index = lang_dict[language]
 
@@ -48,11 +48,11 @@ def text_to_speech(text, language, rate=150, volume=.8):
     speaker.say(text)
     speaker.runAndWait()
 
-def image_to_speech(language):
-    image_to_text('page.jpg')
+def image_to_speech(language, rate, volume, path):
+    image_to_text(path)
     with open('page.txt') as f:
         text = f.read().replace('\n', '')
-    text_to_speech(text, language)
+    text_to_speech(text, language, rate, volume)
 
 def b64_to_image(encoded_data):
     reduced_encoded_data = encoded_data[33:]
@@ -158,3 +158,36 @@ def detect_bill(path):
                 break
         print(currency)
 
+def detect_sign(path):
+    currency = "no sign identified"
+    client = vision.ImageAnnotatorClient()
+
+    with io.open(path, 'rb') as image_file:
+        content = image_file.read()
+
+    image = vision.Image(content=content)
+
+    response = client.web_detection(image=image)
+    annotations = response.web_detection
+
+    if annotations.web_entities:
+        for entity in annotations.web_entities:
+            if entity.description == "United States five-dollar bill":
+                currency = "5 dollar bill"
+                break
+            elif entity.description == "United States two-dollar bill":
+                currency = "2 dollar bill"
+                break
+            elif entity.description == "United States one-dollar bill":
+                currency = "1 dollar bill"
+                break
+            elif entity.description == "United States hundred-dollar bill":
+                currency = "100 dollar bill"
+                break
+            elif entity.description == "United States fifty-dollar bill":
+                currency = "50 dollar bill"
+                break
+            elif entity.description == "United States ten-dollar bill":
+                currency = "10 dollar bill"
+                break
+        print(currency)
