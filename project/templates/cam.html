@@ -21,6 +21,22 @@
         <img id="photo" alt="The screen capture will appear in this box."> 
     </div>
     </div>
+    <script>
+        function (id) {
+            var img = document.createElement("img");
+            img.src = "/project/scanned.jpg";
+            var block = document.getElementById(id);
+            block.appendChild(img);
+        }
+        var img = new File("/project/scanned.jpg");
+        while (True) {
+            if (img.exists()) {
+                function(image)
+                break
+            }
+
+        }
+    </script>
 
 </body>
 </html>
