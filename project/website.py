@@ -20,16 +20,16 @@ def speak():
     global lang
     output = request.get_json()
     if output == "English":
-        text_to_speech("English", "English", 1.5, 0.8)
+        text_to_speech("English", "English", 100, 1)
         lang = "English"
     elif output == "German":
-        text_to_speech("German", "German", 1.5, 0.8)
+        text_to_speech("Deutsch", "German", 100, 1)
         lang = "German"
     elif output == "Spanish":
-        text_to_speech("Spanish", "Spanish", 1.5, 0.8)
+        text_to_speech("Español", "Spanish", 100, 1)
         lang = "Spanish"
     elif output == "French":
-        text_to_speech("French", "French", 1.5, 0.8)
+        text_to_speech("Français", "French", 100, 1)
         lang = "French"
 
 @app.route('/selection', methods=['POST'])
