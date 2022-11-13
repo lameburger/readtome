@@ -1,0 +1,33 @@
+<!doctype html>
+<html>
+  <head>
+    <title>ReadToMe</title>
+    <meta charset='utf-8'>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/main.css') }}" type="text/css" media="all">
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script>
+    <script src="static/scripts/speak.js"></script>
+  </head>
+  <body>
+    <a href="/mode">
+      <div id="div1" onclick="language('English')">
+        <p id="a">English</p>
+      </div>
+    </a> 
+    <a href="/mode" onclick="playSound('static/sounds/Audio-2_Deutsch.mp3')">
+      <div id="div2" onclick="language('German')">
+        <p id="b">Deutsch</p>
+      </div>
+    </a>
+    </a>
+    <a href="/mode" onclick="playSpanish()">
+      <div id="div3" onclick="language('Spanish')">
+        <p id="c">Español</p>
+      </div>
+    </a>
+    <a href="/mode" onclick="playSound('statics/sounds/Audio-1_Francais.mp3')">
+      <div id="div4" onclick="language('French')">
+        <p id="d">Français</p>
+      </div>
+    </a>
+  </body>
+</html>

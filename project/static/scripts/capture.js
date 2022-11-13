@@ -20,6 +20,7 @@
     var canvas = null;
     var photo = null;
     var startbutton = null;
+    var click_amount = null;
 
   
     function startup() {
@@ -93,7 +94,7 @@
         photo.setAttribute('src', data);
 
         const s = JSON.stringify(data);
-        $.ajax({ url:"/test",
+        $.ajax({ url:"/read",
         type:"POST",
         contentType: "application/json",
         data: JSON.stringify(s)})

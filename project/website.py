@@ -2,21 +2,67 @@ import json
 from flask import Flask, render_template, request
 from main import *
 
+global mode
+
+
 app = Flask(__name__)
 
 @app.route('/')
 def index():
-    return render_template('index.html')
+    return render_template('language.html')
 
-@app.route('/test', methods=['POST'])
-def test():
+@app.route('/mode')
+def mode():
+    return render_template('mode.html')
+
+@app.route('/speak', methods=['POST'])
+def speak():
+    global lang
     output = request.get_json()
-    print(output) # This is the output that was stored in the JSON within the browser
+    if output == "English":
+        text_to_speech("English", "English", 1.5, 0.8)
+        lang = "English"
+    elif output == "German":
+        text_to_speech("German", "German", 1.5, 0.8)
+        lang = "German"
+    elif output == "Spanish":
+        text_to_speech("Spanish", "Spanish", 1.5, 0.8)
+        lang = "Spanish"
+    elif output == "French":
+        text_to_speech("French", "French", 1.5, 0.8)
+        lang = "French"
+
+@app.route('/selection', methods=['POST'])
+def selection(): 
+    global mode
+    output = request.get_json()
+    if output == "Food Menu":
+        mode = "Food Menu"
+    elif output == "Currency":
+        mode = "Currency"
+    elif output == "Read":
+        mode = "Read"
+    else:
+        mode = "settings"
+    
+@app.route('/cam')
+def camera():
+    return render_template('cam.html')
+
+@app.route('/settings')
+def settings():
+    return render_template('settings.html')
+
+@app.route('/read', methods=['POST'])
+def read():
+    output = request.get_json()
     print(type(output))
-    result = json.loads(output) #this converts the json output to a python dictionary
-    print(result) # Printing the new dictionary
-    print(type(result))#this shows the json converted as a python dictionary
-    return result
+    result = json.loads(output)
+    print(result)
+    print(type(result))
+    # js2py.run_file('static/scripts/python.js')
+    return scan(result)
+
 
 if __name__ == '__main__':
     app.run(debug=True)  

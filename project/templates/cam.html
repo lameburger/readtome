@@ -1,7 +1,7 @@
 <!doctype html>
 <html>
 <head>
-	<title>WebRTC: Still photo capture demo</title>
+	<title>ReadToMe</title>
 	<meta charset='utf-8'>
 	<link rel="stylesheet" href="{{ url_for('static', filename='styles/main.css') }}" type="text/css" media="all">
 	{% block head %}{% endblock %}
@@ -10,16 +10,17 @@
 </head>
 <body>
 
-<div class="contentarea">
-  <div class="camera">
-    <video id="video">Video stream not available.</video>
-    <button id="startbutton">Take photo</button> 
-  </div>
-  <canvas id="canvas">
-  </canvas>
-  <div class="output">
-    <img id="photo" alt="The screen capture will appear in this box."> 
-  </div>
-</div>
+    <div class="contentarea">
+    <div class="camera">
+        <video id="video">Video stream not available.</video>
+        <button id="startbutton">Take photo</button> 
+    </div>
+    <canvas id="canvas">
+    </canvas>
+    <div class="output">
+        <img id="photo" alt="The screen capture will appear in this box."> 
+    </div>
+    </div>
+
 </body>
 </html>
