@@ -79,7 +79,7 @@ def scan(encoded_data):
 
     img = cv2.imread("snapshot.jpg")
     height, width, _ = img.shape
-    
+    image = cv2.imread("snapshot.jpg")
     for object_ in objects:
         vertices = []
         for vertex in object_.bounding_poly.normalized_vertices:
@@ -101,7 +101,7 @@ def scan(encoded_data):
         x2 = round(maxtuple[0]*width)
         y2 = round(maxtuple[1]*height)
         img = cv2.rectangle(img, (x1, y1), (x2, y2), (36, 255, 12), 1)
-        crop(x1, y1, x2, y2, object_.name, img)
+        crop(x1, y1, x2, y2, object_.name, image)
         cv2.putText(img, object_.name, (round(mintuple[0]*width)+1, round(mintuple[1]*height)+16), cv2.FONT_HERSHEY_SIMPLEX, .7, (36,255,12), 2)
     cv2.imwrite("identified.jpg", img)
 
@@ -115,10 +115,7 @@ def killfiles():
 
 def crop(x1, y1, x2, y2, name, img):
     crop_img = img[y1:y2, x1:x2]
-    # Show image
-    cv2.imshow("cropped", crop_img)
-    cv2.waitKey(0)
-    cv2.imwrite(f"cropped{name}{x1}{y1}{x1+width}{y1+height}.jpg", cut_img)
+    cv2.imwrite(f"cropped{name}{x1}{y1}{x2}{y2}.jpg", crop_img)
 
 #takes in picture and splits into two halves split by a vertical line
 def booksplit(book):
